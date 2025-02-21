@@ -67,8 +67,12 @@
               // Now perform the actions on the opened dropdown using wildcard selectors
               await new Promise(resolve => setTimeout(() => {
                   const topDiv = Array.from(dropdown.querySelector('[class^="Dropdown-module_dropdown_container__"]').querySelectorAll('div'))
-                                      .find(div => div.textContent.includes('Download & transfer via USB')); // Download & transfer via USB
-                  topDiv.querySelector('div').click();
+                                      .find(div => div.textContent.includes('Download & transfer via USB'));
+                  if (topDiv) {                      
+                    topDiv.querySelector('div').click(); // Download & transfer via USB
+                  } else {
+                    console.log('Download option not available. Continuing..');
+                  }
                   resolve();
               }, 500));
 
@@ -80,8 +84,13 @@
               }, 500));
 
               await new Promise(resolve => setTimeout(() => {
-                  Array.from(dropdown.querySelectorAll('[id$="_CONFIRM"]'))
-                       .find(div => div.textContent.includes('Download')).click(); // Download
+                  const downloadBtn = Array.from(dropdown.querySelectorAll('[id$="_CONFIRM"]'))
+                       .find(div => div.textContent.includes('Download'));
+                  if (downloadBtn) {                      
+                    downloadBtn.click(); // Download
+                  } else {
+                    console.log('Download button not available. Skipping..');
+                  }
                   resolve();
               }, 500));
 
