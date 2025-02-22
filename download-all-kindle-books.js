@@ -55,6 +55,7 @@
           // Get all dropdowns with the class prefix 'Dropdown-module_container__'
           const dropdowns = document.querySelectorAll('[class^="Dropdown-module_container__"]');
 
+          let skipped = 0;
           for (let i = 0; i < dropdowns.length; i++) {
               // Open the dropdown
               const dropdown = dropdowns[i];
@@ -63,6 +64,15 @@
 
               // Wait a moment for the dropdown to open and perform the actions
               await new Promise(resolve => setTimeout(resolve, 500));
+
+              // Has download link
+              let tempDiv = Array.from(dropdown.querySelector('[class^="Dropdown-module_dropdown_container__"]').querySelectorAll('div'))
+                                      .find(div => div.textContent.includes('Download & transfer via USB')); // Download & transfer via USB
+              let hasDownload = typeof tempDiv == 'object';
+              if (! hasDownload) {
+                  console.log(++skipped, 'titles skipped');
+                  continue;
+              }
 
               // Now perform the actions on the opened dropdown using wildcard selectors
               await new Promise(resolve => setTimeout(() => {
