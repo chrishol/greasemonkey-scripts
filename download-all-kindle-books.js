@@ -63,7 +63,10 @@
 
               // Wait a moment for the dropdown to open and perform the actions
               await new Promise(resolve => setTimeout(resolve, 500));
-
+              // check to see if download & transfer exists
+              if(Array.from(dropdown.querySelector('[class^="Dropdown-module_dropdown_container__"]').querySelectorAll('div'))
+                                      .find(div => div.textContent.includes('Download & transfer via USB')) === undefined) continue;
+            
               // Now perform the actions on the opened dropdown using wildcard selectors
               await new Promise(resolve => setTimeout(() => {
                   const topDiv = Array.from(dropdown.querySelector('[class^="Dropdown-module_dropdown_container__"]').querySelectorAll('div'))
